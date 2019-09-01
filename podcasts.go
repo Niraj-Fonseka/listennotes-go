@@ -51,10 +51,10 @@ var (
 	podcastsURL = "%s/best_podcasts?genre_id=%d&page=%d&region=%s&safe_mode=%d"
 )
 
-func bestPodcastsRequest(client *http.Client, base_url string, genre_id string, region string, page int, safe_mode int) {
+func bestPodcastsRequest(client *http.Client, base_url string, genre_id string, region string, page int, safe_mode int, token string) {
 	podcastsURL := fmt.Sprintf(podcastsURL, base_url, genre_id, page, region, safe_mode)
 
-	response, err := newGetRequest(podcastsURL, client)
+	response, err := newGetRequest(podcastsURL, token, client)
 
 	if err != nil {
 		fmt.Println(err)

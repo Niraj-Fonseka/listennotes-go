@@ -5,10 +5,11 @@ import (
 	"net/http"
 )
 
-func newGetRequest(url string, client *http.Client) ([]byte, error) {
+func newGetRequest(url string, token string, client *http.Client) ([]byte, error) {
 
 	request, err := http.NewRequest("GET", url, nil)
 	request.Header.Set("Content-type", "application/json")
+	request.Header.Set("X-ListenAPI-Key", token)
 
 	if err != nil {
 		return nil, err

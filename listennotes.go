@@ -21,5 +21,5 @@ func NewListenNotesClient(key string) *ListenNotes {
 }
 
 func (l *ListenNotes) BestPodcasts(genre_id string, region string, page int, safe_mode int) {
-	bestPodcastsRequest(l.httpClient, listenNotesBaseURL, genre_id, region, page, safe_mode)
+	bestPodcastsRequest(l.httpClient, listenNotesBaseURL, genre_id, region, page, safe_mode, l.ApiKey)
 }
