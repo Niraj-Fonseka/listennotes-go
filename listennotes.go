@@ -1,13 +1,11 @@
 package listennotes
 
-import (
-	"net/http"
-)
+import "net/http"
 
 type ListenNotes struct {
 	ApiKey     string
 	URL        string
-	httpclient *http.Client
+	httpClient *http.Client
 }
 
 var (
@@ -15,10 +13,13 @@ var (
 )
 
 func NewListenNotesClient(key string) *ListenNotes {
-
 	return &ListenNotes{
 		ApiKey:     key,
 		URL:        listenNotesBaseURL,
-		httpclient: &http.Client{},
+		httpClient: &http.Client{},
 	}
+}
+
+func (l *ListenNotes) BestPodcasts(genre_id string, region string, page int, safe_mode int) {
+	bestPodcastsRequest(l.httpClient, listenNotesBaseURL, genre_id, region, page, safe_mode)
 }

@@ -1,6 +1,9 @@
 package listennotes
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 type Podcast struct {
 	ID                string `json:"id"`
@@ -44,11 +47,19 @@ type Podcast struct {
 	GenreIds []int `json:"genre_ids"`
 }
 
-func (l *ListenNotes) BestPodcasts(genre_id string, region string, page int, safe_mode int) {
-	podcastsURL := fmt.Sprintf("%s/best_podcasts?genre_id=%d&page=%d&region=%s&safe_mode=%d", l.URL, genre_id, page, region, safe_mode)
+var (
+	podcastsURL = "%s/best_podcasts?genre_id=%d&page=%d&region=%s&safe_mode=%d"
+)
 
-}
+func bestPodcastsRequest(client *http.Client, base_url string, genre_id string, region string, page int, safe_mode int) {
+	podcastsURL := fmt.Sprintf(podcastsURL, base_url, genre_id, page, region, safe_mode)
 
-func (p *Podcast) bestPodcastsRequest() {
+	response, err := newGetRequest(podcastsURL, client)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(string(response))
 
 }
