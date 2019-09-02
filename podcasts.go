@@ -1,11 +1,20 @@
 package listennotes
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-type Podcast struct {
+type Podcasts struct {
+	PageNumber         int               `json:"page_number"`
+	PreviousPageNumber int               `json:"previous_page_number"`
+	NextPageNumber     int               `json:"next_page_number"`
+	Total              int               `json:"total"`
+	podcasts           []PodcastResponse `json:"podcasts"`
+}
+
+type PodcastResponse struct {
 	ID                string `json:"id"`
 	Title             string `json:"title"`
 	Publisher         string `json:"publisher"`
@@ -51,15 +60,30 @@ var (
 	podcastsURL = "%s/best_podcasts?genre_id=%d&page=%d&region=%s&safe_mode=%d"
 )
 
-func bestPodcastsRequest(client *http.Client, base_url string, genre_id string, region string, page int, safe_mode int, token string) {
-	podcastsURL := fmt.Sprintf(podcastsURL, base_url, genre_id, page, region, safe_mode)
+type PodcastsOptions struct {
+	GenreID  string
+	Region   string
+	Page     int
+	SafeMode int
+}
+
+func bestPodcastsRequest(client *http.Client, token string, options PodcastsOptions) (podcasts Podcasts, err error) {
+	podcastsURL := fmt.Sprintf(podcastsURL, listenNotesBaseURL, options.GenreID, options.Page, options.Region, options.SafeMode)
 
 	response, err := newGetRequest(podcastsURL, token, client)
 
 	if err != nil {
-		fmt.Println(err)
+		return podcasts, err
 	}
 
-	fmt.Println(string(response))
+	var podcastResp Podcasts
+
+	err = json.Unmarshal(response, &podcastResp)
+
+	if err != nil {
+		return podcasts, err
+	}
+
+	return podcastResp, nil
 
 }

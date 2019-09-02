@@ -20,6 +20,6 @@ func NewListenNotesClient(key string) *ListenNotes {
 	}
 }
 
-func (l *ListenNotes) BestPodcasts(genre_id string, region string, page int, safe_mode int) {
-	bestPodcastsRequest(l.httpClient, listenNotesBaseURL, genre_id, region, page, safe_mode, l.ApiKey)
+func (l *ListenNotes) BestPodcasts(options PodcastsOptions) (podcasts Podcasts, err error) {
+	return bestPodcastsRequest(l.httpClient, l.ApiKey, options)
 }
