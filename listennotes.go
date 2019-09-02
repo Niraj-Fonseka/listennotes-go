@@ -23,3 +23,7 @@ func NewListenNotesClient(key string) *ListenNotes {
 func (l *ListenNotes) BestPodcasts(options PodcastsOptions) (podcasts Podcasts, err error) {
 	return bestPodcastsRequest(l.httpClient, l.ApiKey, options)
 }
+
+func (l *ListenNotes) PodcastsByID(id string, options PodcastsOptions) (podcast Podcast, err error) {
+	return getPodcastByIDRequest(l.httpClient, l.ApiKey, id, options)
+}

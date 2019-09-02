@@ -7,14 +7,14 @@ import (
 )
 
 type Podcasts struct {
-	PageNumber         int               `json:"page_number"`
-	PreviousPageNumber int               `json:"previous_page_number"`
-	NextPageNumber     int               `json:"next_page_number"`
-	Total              int               `json:"total"`
-	podcasts           []PodcastResponse `json:"podcasts"`
+	PageNumber         int       `json:"page_number"`
+	PreviousPageNumber int       `json:"previous_page_number"`
+	NextPageNumber     int       `json:"next_page_number"`
+	Total              int       `json:"total"`
+	Podcasts           []Podcast `json:"podcasts"`
 }
 
-type PodcastResponse struct {
+type Podcast struct {
 	ID                string `json:"id"`
 	Title             string `json:"title"`
 	Publisher         string `json:"publisher"`
@@ -57,18 +57,22 @@ type PodcastResponse struct {
 }
 
 var (
-	podcastsURL = "%s/best_podcasts?genre_id=%d&page=%d&region=%s&safe_mode=%d"
+	bestPodcastsURL = "%s/best_podcasts?genre_id=%d&page=%d&region=%s&safe_mode=%d"
+	pocastByIDURL   = "%s/podcasts/%s?next_episode_pub_date=%d&sort=%s"
 )
 
 type PodcastsOptions struct {
-	GenreID  string
-	Region   string
-	Page     int
-	SafeMode int
+	GenreID                string
+	Region                 string
+	Page                   int
+	SafeMode               int
+	NextEpisodePublishDate int
+	PodcastID              string
+	Sort                   string
 }
 
 func bestPodcastsRequest(client *http.Client, token string, options PodcastsOptions) (podcasts Podcasts, err error) {
-	podcastsURL := fmt.Sprintf(podcastsURL, listenNotesBaseURL, options.GenreID, options.Page, options.Region, options.SafeMode)
+	podcastsURL := fmt.Sprintf(bestPodcastsURL, listenNotesBaseURL, options.GenreID, options.Page, options.Region, options.SafeMode)
 
 	response, err := newGetRequest(podcastsURL, token, client)
 
@@ -86,4 +90,25 @@ func bestPodcastsRequest(client *http.Client, token string, options PodcastsOpti
 
 	return podcastResp, nil
 
+}
+
+func getPodcastByIDRequest(client *http.Client, token string, id string, options PodcastsOptions) (podcast Podcast, err error) {
+	podcastByID := fmt.Sprintf(pocastByIDURL, listenNotesBaseURL, id, options.NextEpisodePublishDate, options.Sort)
+
+	fmt.Println(podcastByID)
+	response, err := newGetRequest(podcastByID, token, client)
+
+	if err != nil {
+		return podcast, err
+	}
+
+	var podcastResp Podcast
+
+	err = json.Unmarshal(response, &podcastResp)
+
+	if err != nil {
+		return podcast, err
+	}
+
+	return podcastResp, nil
 }
