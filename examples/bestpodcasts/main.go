@@ -1,13 +1,12 @@
-package main 
+package main
 
 import (
 	"fmt"
 	listennotes "listennotes-go"
 )
 
-
-func main(){
+func main() {
 	client := listennotes.NewListenNotesClient("API_KEY")
-		
+
 	fmt.Println(client)
 }

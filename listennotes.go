@@ -9,7 +9,7 @@ type ListenNotes struct {
 }
 
 var (
-	listenNotesBaseURL = "https://listen-api.listennotes.com/api/v2/"
+	ListenNotesBaseURL = "https://listen-api.listennotes.com/api/v2/"
 )
 
 func NewListenNotesClient(key string) *ListenNotes {
@@ -20,6 +20,7 @@ func NewListenNotesClient(key string) *ListenNotes {
 	}
 }
 
+// get best podcasts
 func (l *ListenNotes) BestPodcasts(options PodcastsOptions) (podcasts Podcasts, err error) {
 	return bestPodcastsRequest(l.httpClient, l.ApiKey, options)
 }

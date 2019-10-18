@@ -1,4 +1,4 @@
-package listennotes
+package podcasts
 
 import (
 	"encoding/json"
@@ -57,11 +57,12 @@ type Podcast struct {
 }
 
 var (
-	bestPodcastsURL = "%s/best_podcasts?genre_id=%d&page=%d&region=%s&safe_mode=%d"
-	pocastByIDURL   = "%s/podcasts/%s?next_episode_pub_date=%d&sort=%s"
+	listenNodesField = "https://listen-api.listennotes.com/api/v2/"
+	bestPodcastsURL  = "%s/best_podcasts?genre_id=%d&page=%d&region=%s&safe_mode=%d"
+	pocastByIDURL    = "%s/podcasts/%s?next_episode_pub_date=%d&sort=%s"
 )
 
-type PodcastsOptions struct {
+type Params struct {
 	GenreID                string
 	Region                 string
 	Page                   int
@@ -71,7 +72,7 @@ type PodcastsOptions struct {
 	Sort                   string
 }
 
-func bestPodcastsRequest(client *http.Client, token string, options PodcastsOptions) (podcasts Podcasts, err error) {
+func bestPodcastsRequest(client *http.Client, token string, options Params) (podcasts Podcasts, err error) {
 	podcastsURL := fmt.Sprintf(bestPodcastsURL, listenNotesBaseURL, options.GenreID, options.Page, options.Region, options.SafeMode)
 
 	response, err := newGetRequest(podcastsURL, token, client)
@@ -90,25 +91,4 @@ func bestPodcastsRequest(client *http.Client, token string, options PodcastsOpti
 
 	return podcastResp, nil
 
-}
-
-func getPodcastByIDRequest(client *http.Client, token string, id string, options PodcastsOptions) (podcast Podcast, err error) {
-	podcastByID := fmt.Sprintf(pocastByIDURL, listenNotesBaseURL, id, options.NextEpisodePublishDate, options.Sort)
-
-	fmt.Println(podcastByID)
-	response, err := newGetRequest(podcastByID, token, client)
-
-	if err != nil {
-		return podcast, err
-	}
-
-	var podcastResp Podcast
-
-	err = json.Unmarshal(response, &podcastResp)
-
-	if err != nil {
-		return podcast, err
-	}
-
-	return podcastResp, nil
 }
