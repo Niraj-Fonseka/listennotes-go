@@ -1,11 +1,13 @@
-package podcasts
+package listennotes
 
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 )
 
+// Podcasts is the response for multiple podcasts
 type Podcasts struct {
 	PageNumber         int       `json:"page_number"`
 	PreviousPageNumber int       `json:"previous_page_number"`
@@ -14,6 +16,7 @@ type Podcasts struct {
 	Podcasts           []Podcast `json:"podcasts"`
 }
 
+// Podcast is the response for one podcast
 type Podcast struct {
 	ID                string `json:"id"`
 	Title             string `json:"title"`
@@ -57,24 +60,30 @@ type Podcast struct {
 }
 
 var (
-	listenNodesField = "https://listen-api.listennotes.com/api/v2/"
-	bestPodcastsURL  = "%s/best_podcasts?genre_id=%d&page=%d&region=%s&safe_mode=%d"
-	pocastByIDURL    = "%s/podcasts/%s?next_episode_pub_date=%d&sort=%s"
+	listenNotesBaseURL = "https://listen-api.listennotes.com/api/v2/"
+	bestPodcastsURL    = "%s/best_podcasts?genre_id=%d&page=%d&region=%s&safe_mode=%d"
+	pocastByIDURL      = "%s/podcasts/%s?next_episode_pub_date=%d&sort=%s"
 )
 
-type Params struct {
-	GenreID                string
-	Region                 string
-	Page                   int
-	SafeMode               int
-	NextEpisodePublishDate int
-	PodcastID              string
-	Sort                   string
-}
+// type Params struct {
+// 	GenreID                string
+// 	Region                 string
+// 	Page                   int
+// 	SafeMode               int
+// 	NextEpisodePublishDate int
+// 	PodcastID              string
+// 	Sort                   string
+// }
 
 func bestPodcastsRequest(client *http.Client, token string, options Params) (podcasts Podcasts, err error) {
-	podcastsURL := fmt.Sprintf(bestPodcastsURL, listenNotesBaseURL, options.GenreID, options.Page, options.Region, options.SafeMode)
 
+	if err := paramValidator(options, true); err != nil {
+		log.Println(err)
+		return Podcasts{}, err
+	}
+	podcastsURL := fmt.Sprintf(bestPodcastsURL, listenNotesBaseURL, options["genre_id"].(int), options["page"].(int), options["region"], options["safe_mode"].(int))
+
+	fmt.Println("PODCAST URL ", podcastsURL)
 	response, err := newGetRequest(podcastsURL, token, client)
 
 	if err != nil {

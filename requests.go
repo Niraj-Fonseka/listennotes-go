@@ -1,9 +1,13 @@
 package listennotes
 
 import (
+	"errors"
 	"io/ioutil"
 	"net/http"
 )
+
+// Params is the type to store all the query params
+type Params map[string]interface{}
 
 func newGetRequest(url string, token string, client *http.Client) ([]byte, error) {
 
@@ -30,4 +34,12 @@ func newGetRequest(url string, token string, client *http.Client) ([]byte, error
 	}
 
 	return body, nil
+}
+
+func paramValidator(params Params, needParams bool) error {
+	if needParams && len(params) <= 0 {
+		return errors.New("No parameters provided")
+	}
+
+	return nil
 }
