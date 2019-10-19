@@ -29,7 +29,10 @@ func NewListenNotesClient(key string) *ListenNotes {
 
 // BestPodcasts returns the best podcasts at the moment
 func (l *ListenNotes) BestPodcasts() (podcasts Podcasts, err error) {
-	return bestPodcastsRequest(l.httpClient, l.APIkey, l.Params)
+	podcasts, err = bestPodcastsRequest(l.httpClient, l.APIkey, l.Params)
+	l.Params = nil
+
+	return podcasts, err
 }
 
 // func (l *ListenNotes) PodcastsByID(id string, options PodcastsOptions) (podcast Podcast, err error) {

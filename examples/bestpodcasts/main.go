@@ -18,4 +18,5 @@ func main() {
 	client.Params["region"] = "us"
 	client.Params["safe_mode"] = 1
 	fmt.Println(client.BestPodcasts())
+	fmt.Println(client.Params)
 }
