@@ -46,3 +46,7 @@ func (l *ListenNotes) PodcastsByID(id string) (podcast Podcast, err error) {
 func (l *ListenNotes) Genres() (genre Genres, err error) {
 	return getGenreRequest(l.httpClient, l.APIkey)
 }
+
+func (l *ListenNotes) GetEpisodeMetadataByID(id string) (episode EpisodeMetadata, err error) {
+	return getEpisodeMetaDataByIDRequest(l.httpClient, l.APIkey, id)
+}
