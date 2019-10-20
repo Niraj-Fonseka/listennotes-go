@@ -1,22 +1,32 @@
 package listennotes
 
-// func getPodcastByIDRequest(client *http.Client, token string, id string, options PodcastsOptions) (podcast Podcast, err error) {
-// 	podcastByID := fmt.Sprintf(pocastByIDURL, listenNotesBaseURL, id, options.NextEpisodePublishDate, options.Sort)
+import (
+	"encoding/json"
+	"net/http"
+)
 
-// 	fmt.Println(podcastByID)
-// 	response, err := newGetRequest(podcastByID, token, client)
+var (
+	pocastByIDURL = "podcasts/"
+)
 
-// 	if err != nil {
-// 		return podcast, err
-// 	}
+func getPodcastByIDRequest(client *http.Client, token string, id string, options Params) (podcast Podcast, err error) {
 
-// 	var podcastResp Podcast
+	builtURL := buildURL(options)
+	podcastByID := listenNotesBaseURL + pocastByIDURL + id + "?" + builtURL
 
-// 	err = json.Unmarshal(response, &podcastResp)
+	response, err := newGetRequest(podcastByID, token, client)
 
-// 	if err != nil {
-// 		return podcast, err
-// 	}
+	if err != nil {
+		return podcast, err
+	}
 
-// 	return podcastResp, nil
-// }
+	var podcastResp Podcast
+
+	err = json.Unmarshal(response, &podcastResp)
+
+	if err != nil {
+		return podcast, err
+	}
+
+	return podcastResp, nil
+}

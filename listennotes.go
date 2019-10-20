@@ -12,7 +12,7 @@ type ListenNotes struct {
 
 var (
 	// ListenNotesBaseURL holds the base url for the listen notes api
-	ListenNotesBaseURL = "https://listen-api.listennotes.com/api/v2/"
+	listenNotesBaseURL = "https://listen-api.listennotes.com/api/v2/"
 )
 
 // NewListenNotesClient creates a new ListenNotes instance
@@ -21,7 +21,6 @@ func NewListenNotesClient(key string) *ListenNotes {
 	params := make(Params)
 	return &ListenNotes{
 		APIkey:     key,
-		URL:        listenNotesBaseURL,
 		httpClient: &http.Client{},
 		Params:     params,
 	}
@@ -35,6 +34,15 @@ func (l *ListenNotes) BestPodcasts() (podcasts Podcasts, err error) {
 	return podcasts, err
 }
 
-// func (l *ListenNotes) PodcastsByID(id string, options PodcastsOptions) (podcast Podcast, err error) {
-// 	return getPodcastByIDRequest(l.httpClient, l.ApiKey, id, options)
-// }
+// PodcastsByID returns a podcast given ID
+func (l *ListenNotes) PodcastsByID(id string) (podcast Podcast, err error) {
+	podcast, err = getPodcastByIDRequest(l.httpClient, l.APIkey, id, l.Params)
+	l.Params = nil
+
+	return podcast, err
+}
+
+// Genres returns a list of genre
+func (l *ListenNotes) Genres() (genre Genres, err error) {
+	return getGenreRequest(l.httpClient, l.APIkey)
+}

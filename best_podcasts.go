@@ -2,8 +2,6 @@ package listennotes
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -60,30 +58,14 @@ type Podcast struct {
 }
 
 var (
-	listenNotesBaseURL = "https://listen-api.listennotes.com/api/v2/"
-	bestPodcastsURL    = "%s/best_podcasts?genre_id=%d&page=%d&region=%s&safe_mode=%d"
-	pocastByIDURL      = "%s/podcasts/%s?next_episode_pub_date=%d&sort=%s"
+	bestPodcastsURL = "best_podcasts?"
 )
-
-// type Params struct {
-// 	GenreID                string
-// 	Region                 string
-// 	Page                   int
-// 	SafeMode               int
-// 	NextEpisodePublishDate int
-// 	PodcastID              string
-// 	Sort                   string
-// }
 
 func bestPodcastsRequest(client *http.Client, token string, options Params) (podcasts Podcasts, err error) {
 
-	if err := paramValidator(options, true); err != nil {
-		log.Println(err)
-		return Podcasts{}, err
-	}
-	podcastsURL := fmt.Sprintf(bestPodcastsURL, listenNotesBaseURL, options["genre_id"].(int), options["page"].(int), options["region"], options["safe_mode"].(int))
+	builtURL := buildURL(options)
+	podcastsURL := listenNotesBaseURL + bestPodcastsURL + builtURL
 
-	fmt.Println("PODCAST URL ", podcastsURL)
 	response, err := newGetRequest(podcastsURL, token, client)
 
 	if err != nil {
