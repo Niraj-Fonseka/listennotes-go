@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 )
 
 // Params is the type to store all the query params
@@ -41,11 +42,42 @@ func newGetRequest(url string, token string, client *http.Client) ([]byte, error
 	return body, nil
 }
 
+func newPostRequest(u string, token string, client *http.Client, formValues url.Values) ([]byte, error) {
+
+	request, err := http.NewRequest("POST", u, bytes.NewBufferString(formValues.Encode()))
+
+	if err != nil {
+		return nil, err
+	}
+
+	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	request.Header.Set("X-ListenAPI-Key", token)
+
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := client.Do(request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return body, nil
+}
+
 func paramValidator(params Params, needParams bool) error {
 	if needParams && len(params) <= 0 {
 		return errors.New("No parameters provided")
 	}
-
 	return nil
 }
 

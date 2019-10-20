@@ -1,3 +1,5 @@
+//GetBasicMetadataEpisodes
+
 package main
 
 import (
@@ -8,9 +10,6 @@ import (
 
 func main() {
 	client := listennotes.NewListenNotesClient(os.Getenv("API_KEY"))
-
-	id := "02f0123246c944e289ee2bb90804e41b"
-
-	fmt.Println(client.GetDetailedMetadataEpisode(id))
+	fmt.Println(client.GetBasicMetadataEpisodes("c577d55b2b2b483c969fae3ceb58e362", "0f34a9099579490993eec9e8c8cebb82"))
 
 }

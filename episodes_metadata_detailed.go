@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-type EpisodeMetadata struct {
+type EpisodeMetadataDetailed struct {
 	ID      string `json:"id"`
 	Audio   string `json:"audio"`
 	Image   string `json:"image"`
@@ -62,11 +62,7 @@ type EpisodeMetadata struct {
 	ListennotesEditURL string `json:"listennotes_edit_url"`
 }
 
-var (
-	episodesURL = "episodes/"
-)
-
-func getEpisodeMetaDataByIDRequest(client *http.Client, token string, id string) (episode EpisodeMetadata, err error) {
+func getDetailedEpisodeMetaDataByIDRequest(client *http.Client, token string, id string) (episode EpisodeMetadataDetailed, err error) {
 
 	epsiodesMetadataURL := listenNotesBaseURL + episodesURL + id
 
@@ -77,7 +73,7 @@ func getEpisodeMetaDataByIDRequest(client *http.Client, token string, id string)
 		return episode, err
 	}
 
-	var episodeMetadata EpisodeMetadata
+	var episodeMetadata EpisodeMetadataDetailed
 
 	err = json.Unmarshal(response, &episodeMetadata)
 
