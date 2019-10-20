@@ -47,13 +47,19 @@ func (l *ListenNotes) Genres() (genre Genres, err error) {
 	return getGenreRequest(l.httpClient, l.APIkey)
 }
 
-func (l *ListenNotes) GetDetailedMetadataForEpisode(id string) (episode EpisodeMetadataDetailed, err error) {
+func (l *ListenNotes) DetailedMetadataForEpisode(id string) (episode EpisodeMetadataDetailed, err error) {
 	return getDetailedEpisodeMetaDataByIDRequest(l.httpClient, l.APIkey, id)
 }
 
-func (l *ListenNotes) GetBasicMetadataEpisodes(ids ...string) (episode EpisodeMetadataBasic, err error) {
+func (l *ListenNotes) BasicMetadataForEpisodes(ids ...string) (episode EpisodeMetadataBasic, err error) {
 	episode, err = getBasicEpisodeMetaDataByIDRequest(l.httpClient, l.APIkey, ids)
 	l.Params = nil //make this a defer function
 
 	return episode, err
+}
+
+func (l *ListenNotes) BasicPodcastMetaDataByIDRequest(ids ...string) (podcast PodcastMedataBasic, err error) {
+	podcast, err = getBasicPodcastMetaDataByIDRequest(l.httpClient, l.APIkey, ids, l.Params)
+	l.Params = nil
+	return podcast, err
 }

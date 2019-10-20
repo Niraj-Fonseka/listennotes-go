@@ -6,13 +6,13 @@ import (
 )
 
 var (
-	pocastByIDURL = "podcasts/"
+	podcastURL = "podcasts/"
 )
 
 func getPodcastByIDRequest(client *http.Client, token string, id string, options Params) (podcast Podcast, err error) {
 
 	builtURL := buildURL(options)
-	podcastByID := listenNotesBaseURL + pocastByIDURL + id + "?" + builtURL
+	podcastByID := listenNotesBaseURL + podcastURL + id + "?" + builtURL
 
 	response, err := newGetRequest(podcastByID, token, client)
 

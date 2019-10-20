@@ -76,7 +76,6 @@ func csvIDs(ids []string) string {
 	fmt.Println("added ", ids[0])
 	if len(ids) > 1 {
 		for _, v := range ids[1:] {
-			// fmt.Println("IDEx ", i)
 			buf.WriteString(",")
 			buf.WriteString(v)
 
@@ -92,17 +91,3 @@ func buildFormValues(params Params) url.Values {
 	}
 	return data
 }
-
-/*
-import unirest
-
-response = unirest.post("https://listen-api.listennotes.com/api/v2/episodes",
-  headers={
-    "X-ListenAPI-Key": "24918c13982d45aa96a3c62c755fe23d",
-    "Content-Type": "application/x-www-form-urlencoded",
-  },
-  params={
-    "ids": "c577d55b2b2b483c969fae3ceb58e362,0f34a9099579490993eec9e8c8cebb82",
-  }
-)
-*/
