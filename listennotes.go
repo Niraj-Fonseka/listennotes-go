@@ -73,3 +73,7 @@ func (l *ListenNotes) CuratedPodcastsList(id string) (podcasts CuratedPodcasts, 
 func (l *ListenNotes) Regions() (reigons map[string]string, err error) {
 	return getRegions(l.httpClient, l.APIkey)
 }
+
+func (l *ListenNotes) Languages() (languages []string, err error) {
+	return getLanguages(l.httpClient, l.APIkey)
+}
