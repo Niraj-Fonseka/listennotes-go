@@ -69,3 +69,7 @@ func (l *ListenNotes) CuratedPodcastsList(id string) (podcasts CuratedPodcasts, 
 	l.Params = nil
 	return podcasts, err
 }
+
+func (l *ListenNotes) Regions() (reigons map[string]string, err error) {
+	return getRegions(l.httpClient, l.APIkey)
+}
