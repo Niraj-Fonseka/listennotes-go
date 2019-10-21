@@ -63,3 +63,9 @@ func (l *ListenNotes) BasicPodcastMetaDataByIDRequest(ids ...string) (podcast Po
 	l.Params = nil
 	return podcast, err
 }
+
+func (l *ListenNotes) CuratedPodcastsList(id string) (podcasts CuratedPodcasts, err error) {
+	podcasts, err = getCuratedPodcastList(l.httpClient, l.APIkey, id)
+	l.Params = nil
+	return podcasts, err
+}
