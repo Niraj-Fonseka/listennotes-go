@@ -84,3 +84,7 @@ func (l *ListenNotes) Languages() (languages []string, err error) {
 func (l *ListenNotes) JustListen() (podcast RandomPodcast, err error) {
 	return getJustListenPodcast(l.httpClient, l.APIkey)
 }
+
+func (l *ListenNotes) PodcastRecommendations(id string) (recommendations Recommendations, err error) {
+	return getPodcastRecommendations(l.httpClient, l.APIkey, id, l.Params)
+}
