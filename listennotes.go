@@ -85,6 +85,10 @@ func (l *ListenNotes) JustListen() (podcast RandomPodcast, err error) {
 	return getJustListenPodcast(l.httpClient, l.APIkey)
 }
 
-func (l *ListenNotes) PodcastRecommendations(id string) (recommendations Recommendations, err error) {
+func (l *ListenNotes) PodcastRecommendations(id string) (recommendations PodcastRecommendations, err error) {
 	return getPodcastRecommendations(l.httpClient, l.APIkey, id, l.Params)
+}
+
+func (l *ListenNotes) EpisodeRecommendations(id string) (recommendations EpisodeRecommendations, err error) {
+	return getEpisodeRecommendations(l.httpClient, l.APIkey, id, l.Params)
 }

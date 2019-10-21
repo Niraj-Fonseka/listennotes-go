@@ -6,11 +6,11 @@ import (
 	"net/http"
 )
 
-type Recommendations struct {
-	Recommendations []Recommendation `json:"recommendations"`
+type PodcastRecommendations struct {
+	Recommendations []PodcastRecommendation `json:"recommendations"`
 }
 
-type Recommendation struct {
+type PodcastRecommendation struct {
 	ID    string `json:"id"`
 	Rss   string `json:"rss"`
 	Email string `json:"email"`
@@ -56,7 +56,7 @@ var (
 	podcastsRecommendationsURL = "podcasts/%s/recommendations"
 )
 
-func getPodcastRecommendations(client *http.Client, token string, id string, options Params) (recommendations Recommendations, err error) {
+func getPodcastRecommendations(client *http.Client, token string, id string, options Params) (recommendations PodcastRecommendations, err error) {
 
 	builtURL := buildURL(options)
 
@@ -70,7 +70,7 @@ func getPodcastRecommendations(client *http.Client, token string, id string, opt
 		return recommendations, err
 	}
 
-	var recommendationResp Recommendations
+	var recommendationResp PodcastRecommendations
 
 	err = json.Unmarshal(response, &recommendationResp)
 
