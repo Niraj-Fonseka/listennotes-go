@@ -64,12 +64,15 @@ func (l *ListenNotes) BasicPodcastMetaDataByIDRequest(ids ...string) (podcast Po
 	return podcast, err
 }
 
-func (l *ListenNotes) CuratedPodcastsList(id string) (podcasts CuratedPodcasts, err error) {
-	podcasts, err = getCuratedPodcastList(l.httpClient, l.APIkey, id)
+func (l *ListenNotes) CuratedPodcastsListByID(id string) (podcasts CuratedPodcasts, err error) {
+	podcasts, err = getCuratedPodcastListByID(l.httpClient, l.APIkey, id)
 	l.Params = nil
 	return podcasts, err
 }
 
+func (l *ListenNotes) CuratedPodcastsList() (podcasts CuratedPodcastsPage, err error) {
+	return getCuratedPodcastList(l.httpClient, l.APIkey, l.Params)
+}
 func (l *ListenNotes) Regions() (reigons map[string]string, err error) {
 	return getRegions(l.httpClient, l.APIkey)
 }

@@ -57,12 +57,12 @@ type CuratedPodcasts struct {
 }
 
 var (
-	curatedPodcastsURL = "curated_podcasts/"
+	curatedPodcastsIDURL = "curated_podcasts/"
 )
 
-func getCuratedPodcastList(client *http.Client, token string, id string) (podcasts CuratedPodcasts, err error) {
+func getCuratedPodcastListByID(client *http.Client, token string, id string) (podcasts CuratedPodcasts, err error) {
 
-	podcastsURL := listenNotesBaseURL + curatedPodcastsURL + id
+	podcastsURL := listenNotesBaseURL + curatedPodcastsIDURL + id
 
 	response, err := newGetRequest(podcastsURL, token, client)
 
