@@ -9,6 +9,6 @@ import (
 func main() {
 	client := listennotes.NewListenNotesClient(os.Getenv("API_KEY"))
 
-	fmt.Println(client.CuratedPodcastsListByID("SDFKduyJ47r"))
+	fmt.Println(client.CuratedPodcastsByID("SDFKduyJ47r"))
 
 }
