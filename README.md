@@ -2,6 +2,7 @@
 
 For more information and getting a token visit https://www.listennotes.com/api/docs/
 
+GoDoc : https://godoc.org/github.com/Niraj-Fonseka/listennotes-go
 
 
 ### Examples 
