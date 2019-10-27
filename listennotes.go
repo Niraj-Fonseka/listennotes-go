@@ -50,7 +50,7 @@ func (l *ListenNotes) Genres() (genre Genres, err error) {
 }
 
 // DetailedMetadataForEpisode fetches detailed meta data for a specific episode.
-func (l *ListenNotes) DetailedMetadataForEpisode(id string) (episode EpisodeMetadataDetailed, err error) {
+func (l *ListenNotes) DetailedEpisodeMetadata(id string) (episode EpisodeMetadataDetailed, err error) {
 	return getDetailedEpisodeMetaDataByIDRequest(l.httpClient, l.APIkey, id)
 }
 
