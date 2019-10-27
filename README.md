@@ -8,28 +8,28 @@ For more information and getting a token visit https://www.listennotes.com/api/d
 
 GET [`/best_podcasts`](examples/bestpodcasts)
 
-GET `/podcasts/{id}`
+GET [`/podcasts/{id}`](examples/podcast_by_id)
 
-GET `/episodes/{id}`
+GET [`/episodes/{id}`](examples/podcast_by_id)
 
-POST `/episodes`
+POST [`/episodes`](examples/episodes_by_id)
 
-POST `/podcasts`
+POST [`/podcasts`](examples/podcast_metadata_basic)
 
-GET `/curated_podcasts/{id}`
+GET [`/curated_podcasts/{id}`](examples/curated_podcasts_list_by_id)
 
-GET `/genres`
+GET [`/genres`](examples/genres)
 
-GET `/regions`
+GET [`/regions`](examples/reigons)
 
-GET `/languages`
+GET [`/languages`](examples/languages)
 
-GET `/just_listen`
+GET [`/just_listen`](examples/just_listen)
 
-GET `/curated_podcasts`
+GET [`/curated_podcasts`](examples/curated_podcasts_list)
 
-GET `/podcasts/{id}/recommendations`
+GET [`/podcasts/{id}/recommendations`](examples/podcast_recommendations)
 
-GET `/episodes/{id}/recommendations`
+GET [`/episodes/{id}/recommendations`](examples/episode_recommendations)
 
 
