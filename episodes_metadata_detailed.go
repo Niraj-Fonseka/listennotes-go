@@ -83,16 +83,3 @@ func getDetailedEpisodeMetaDataByIDRequest(client *http.Client, token string, id
 
 	return episodeMetadata, nil
 }
-
-// func csvIDs(ids []string) string {
-// 	buf := bytes.Buffer{}
-// 	buf.WriteString(ids[0])
-
-// 	if len(ids) > 1 {
-// 		for i := range ids[1:] {
-// 			buf.WriteString(",")
-// 			buf.WriteString(ids[i])
-// 		}
-// 	}
-// 	return buf.String()
-// }
