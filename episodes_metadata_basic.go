@@ -10,10 +10,10 @@ import (
 )
 
 type EpisodeMetadataBasic struct {
-	Episodes []BasicEpisodeMetadata `json:"episodes"`
+	Episodes []Episode `json:"episodes"`
 }
 
-type BasicEpisodeMetadata struct {
+type Episode struct {
 	ID                 string `json:"id"`
 	Audio              string `json:"audio"`
 	Image              string `json:"image"`

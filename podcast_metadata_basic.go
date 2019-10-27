@@ -49,15 +49,13 @@ type PodcastMetaData struct {
 	EarliestPubDateMs int64  `json:"earliest_pub_date_ms"`
 }
 type PodcastMedataBasic struct {
-	Podcasts       []PodcastMetaData      `json:"podcasts"`
-	LatestEpisodes []BasicEpisodeMetadata `json:"latest_episodes"`
+	Podcasts       []PodcastMetaData `json:"podcasts"`
+	LatestEpisodes []Episode         `json:"latest_episodes"`
 }
 
 func getBasicPodcastMetaDataByIDRequest(client *http.Client, token string, ids []string, params Params) (podcast PodcastMedataBasic, err error) {
 
 	epsiodesMetadataURL := listenNotesBaseURL + podcastURL
-
-	//build csv string
 
 	if len(ids) <= 0 {
 		return podcast, errors.New("No podcast id's provided")
